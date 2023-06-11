@@ -1,8 +1,6 @@
 package controllers
 
 import (
-	"api_webservice_siasn/configs"
-	"api_webservice_siasn/repositories"
 	"api_webservice_siasn/services"
 	"api_webservice_siasn/universalfunctions"
 	"net/http"
@@ -10,9 +8,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RootHandler(c *gin.Context) {
-	firstRouteService := services.NewFirstRouteService(repositories.NewFirstRouteRepository(configs.Connect))
-	firstRoute, err := firstRouteService.FindAll()
+type firstRouteHandler struct {
+	firstRouteService services.FirstRouteService
+}
+
+func NewFristRouteHandler(firstRouteService services.FirstRouteService) *firstRouteHandler {
+	return &firstRouteHandler{firstRouteService}
+}
+
+func (h *firstRouteHandler) RootHandler(c *gin.Context) {
+	firstRoute, err := h.firstRouteService.FindAll()
 
 	universalfunctions.PanicErr(err)
 

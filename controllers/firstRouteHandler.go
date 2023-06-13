@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"api_webservice_siasn/services"
-	"api_webservice_siasn/universalfunctions"
+	"api_webservice_siasn/universals"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -19,7 +19,7 @@ func NewFristRouteHandler(firstRouteService services.FirstRouteService) *firstRo
 func (h *firstRouteHandler) RootHandler(c *gin.Context) {
 	firstRoute, err := h.firstRouteService.FindAll()
 
-	universalfunctions.PanicErr(err)
+	universals.PanicErr(err)
 
 	c.JSON(http.StatusOK, firstRoute)
 }
